@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import IconButton from "@mui/material/IconButton"
@@ -98,6 +98,7 @@ const RightPanel = ({
   onMessageClick,
 }) => {
   const [isDragging, setIsDragging] = useState(false)
+  const nodeRef = useRef(null) // Create ref for the draggable component
 
   // Handle clicking on agent messages
   const handleMessageClick = (message) => {
@@ -281,6 +282,7 @@ const RightPanel = ({
   if (isPopped) {
     return (
       <Draggable
+        nodeRef={nodeRef} // Use ref instead of findDOMNode
         position={position}
         handle=".draggable-handle"
         onStart={handleStart}
@@ -289,6 +291,7 @@ const RightPanel = ({
         cancel=".fullscreen-button" // Don't initiate drag on the fullscreen button
       >
         <Box
+          ref={nodeRef} // Attach the ref to the Box component
           className="popped-panel"
           onClick={handlePanelClick} // Handle clicks to prevent bubbling
           sx={{
